@@ -1,0 +1,10 @@
+@import "@fontsource/roboto";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+* {
+  @apply font-roboto m-0 box-border;
+}
