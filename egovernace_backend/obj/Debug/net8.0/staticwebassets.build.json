@@ -1,0 +1,12 @@
+{
+  "Version": 1,
+  "Hash": "FvlBjroZnsXrX7iMh5E7b8r9KfKDHd7QQMerRkxoVAY=",
+  "Source": "egovernace_backend",
+  "BasePath": "_content/egovernace_backend",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": [],
+  "Endpoints": []
+}

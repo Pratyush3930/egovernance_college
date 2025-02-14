@@ -1,0 +1,6 @@
+@egovernace_backend_HostAddress = http://localhost:5288
+
+GET {{egovernace_backend_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
