@@ -7,9 +7,11 @@ const Login = () => {
         <img src="./logo.png" alt="" />
         <h2 className="text-2xl font-semibold">Bill Management System</h2>
       </div>
-      <LoginForm />
+      <LoginForm/>
     </div>
   );
 };
+
+
 
 export default Login;
