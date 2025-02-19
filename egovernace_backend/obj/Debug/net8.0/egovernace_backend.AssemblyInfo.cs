@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("egovernace_backend")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e63090100191615b8e0e60a26304f4e1e136a38d")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+962e4ba77517c3dc8984a02acf3aa9af3aca6465")]
 [assembly: System.Reflection.AssemblyProductAttribute("egovernace_backend")]
 [assembly: System.Reflection.AssemblyTitleAttribute("egovernace_backend")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

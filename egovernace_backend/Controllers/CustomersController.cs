@@ -61,10 +61,6 @@ namespace backend_egov.Controllers
         {
 
             var allBranches = await dbContext.BranchModels.Select(b => b.Name).ToListAsync();
-            Console.WriteLine("Existing Branches: " + string.Join(", ", allBranches));
-
-
-            // Find BranchId using the given BranchName
             var branch = await dbContext.BranchModels
                 .FirstOrDefaultAsync(b => b.Name == customerDto.BranchName);
             Console.WriteLine(customerDto.BranchName);
@@ -72,8 +68,6 @@ namespace backend_egov.Controllers
             {
                 return BadRequest("Invalid Branch Name");
             }
-
-            // Find DemandTypeId using the given DemandTypeName
             var demandType = await dbContext.DemandTypeModels
                 .FirstOrDefaultAsync(d => d.Type == customerDto.DemandTypeName);
 
@@ -81,8 +75,6 @@ namespace backend_egov.Controllers
             {
                 return BadRequest("Invalid Demand Type Name");
             }
-
-            // Create new customer with resolved IDs
             var newCustomer = new CustomerModel()
             {
                 UserName = customerDto.UserName,
@@ -90,10 +82,9 @@ namespace backend_egov.Controllers
                 Name = customerDto.Name,
                 Address = customerDto.Address,
                 Contact = customerDto.Contact,
-                BranchId = branch.Id,  // Assign resolved BranchId
-                DemandTypeId = demandType.Id // Assign resolved DemandTypeId
+                BranchId = branch.Id, 
+                DemandTypeId = demandType.Id 
             };
-
             dbContext.CustomerModels.Add(newCustomer);
             await dbContext.SaveChangesAsync();
 
@@ -153,7 +144,7 @@ namespace backend_egov.Controllers
             }
 
             var payments = dbContext.PaymentHistories
-                                    .Include(p => p.Bill)  // ✅ Include Bill Details
+                                    .Include(p => p.Bill) 
                                     .Where(p => p.Bill != null && p.Bill.CustomerId == customerId)
                                     .Select(p => new
                                     {
@@ -245,8 +236,8 @@ namespace backend_egov.Controllers
 
             var payload = new
             {
-                return_url = "http://localhost:5175/user-dashboard/payments",
-                website_url = "http://localhost:5175/",
+                return_url = "http://localhost:5173/user-dashboard/payments",
+                website_url = "http://localhost:5173/",
                 amount = 2000,
                 purchase_order_id = "Order01",
                 purchase_order_name = "test",

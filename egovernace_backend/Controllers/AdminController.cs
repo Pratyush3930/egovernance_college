@@ -24,8 +24,6 @@ namespace backend_egov.Controllers
         public async Task<IActionResult> CreateBills([FromBody] BillModel bill)
         {
             Console.WriteLine(JsonConvert.SerializeObject(bill));
-
-            // Retrieve the customer and associated demand type
             var customer = await dbContext.CustomerModels
                 .Include(c => c.DemandType)
                 .FirstOrDefaultAsync(c => c.Id == bill.CustomerId);
@@ -34,53 +32,38 @@ namespace backend_egov.Controllers
             {
                 return NotFound("Customer or Demand Type not found.");
             }
-
-            // Retrieve the rate for the demand type
             var rate = await dbContext.RateModels
                 .FirstOrDefaultAsync(r => r.DemandTypeModelId == customer.DemandTypeId);
-
             if (rate == null)
             {
                 return NotFound("Rate for the customer's demand type not found.");
             }
-
-            // Calculate base TotalAmount
             decimal totalAmount = bill.UnitsConsumed * rate.RatePerUnit;
             decimal fineAmount = 0m;
             decimal discountAmount = 0m;
-
             DateOnly currentDate = DateOnly.FromDateTime(DateTime.Now);
-
-            // Apply fine if DueDate is exceeded
             if (bill.DueDate < currentDate)
             {
                 fineAmount = totalAmount * 0.02m; // 2% fine
                 totalAmount += fineAmount;
             }
-
-            // Apply discount if payment is made within 20 days of IssueDate
             int daysSinceIssue = (currentDate.ToDateTime(TimeOnly.MinValue) - bill.IssueDate.ToDateTime(TimeOnly.MinValue)).Days;
-
             if (daysSinceIssue <= 20)
             {
                 discountAmount = totalAmount * 0.03m; // 3% discount
                 totalAmount -= discountAmount;
             }
-
-            // Create a new bill with the calculated values
             var newCustomerBill = new BillModel()
             {
                 DueDate = bill.DueDate,
                 UnitsConsumed = bill.UnitsConsumed,
-                Fine = fineAmount,      // Save actual fine amount
-                Discount = discountAmount, // Save actual discount amount
+                Fine = fineAmount,
+                Discount = discountAmount,
                 CustomerId = bill.CustomerId,
-                TotalAmount = totalAmount // Set the final TotalAmount
+                TotalAmount = totalAmount
             };
-
             dbContext.BillModels.Add(newCustomerBill);
             var savedDetails = await dbContext.SaveChangesAsync();
-
             return Ok(savedDetails);
         }
 
@@ -145,15 +128,10 @@ namespace backend_egov.Controllers
         public async Task<IActionResult> AddRate([FromBody] RateDto rateDto)
         {
 
-            Console.WriteLine("Here we are"+JsonConvert.SerializeObject(rateDto));
-            // Validate input
-            // Validate input
             if (string.IsNullOrWhiteSpace(rateDto.DemandTypeName) || rateDto.RatePerUnit <= 0)
             {
                 return BadRequest("Invalid demand type name or rate value.");
             }
-
-            // Find DemandTypeModel by name
             var demandType = await dbContext.DemandTypeModels
                 .FirstOrDefaultAsync(dt => dt.Type == rateDto.DemandTypeName);
 
@@ -161,11 +139,9 @@ namespace backend_egov.Controllers
             {
                 return NotFound("Demand type not found.");
             }
-
-            // Create and save new RateModel
             var newRate = new RateModel
             {
-                DemandTypeModelId = demandType.Id, // Get ID from found demand type
+                DemandTypeModelId = demandType.Id,
                 RatePerUnit = rateDto.RatePerUnit
             };
 

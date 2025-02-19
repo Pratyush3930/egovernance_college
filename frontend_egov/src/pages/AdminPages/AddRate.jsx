@@ -10,9 +10,7 @@ const AddRate = () => {
   const [demandTypes, setDemandTypes] = useState([]);
   const FetchDemandType = async () => {
     try {
-      const response = await axiosApi.get(
-        "http://localhost:5288/api/admin/demand-types"
-      );
+      const response = await axiosApi.get("http://localhost:5288/api/admin/demand-types");
       console.log("Fetched Successfully:", response.data);
       setDemandTypes(response.data);
     } catch (error) {
@@ -45,21 +43,11 @@ const AddRate = () => {
   return (
     <div className="w-[80%] m-auto p-6 bg-gray-50 shadow-md rounded-lg">
       <div className="max-w-lg m-auto">
-        <h2 className="text-2xl font-semibold text-gray-800 text-center mb-6">
-          Set Rate per Unit
-        </h2>
+        <h2 className="text-2xl font-semibold text-gray-800 text-center mb-6">Set Rate per Unit</h2>
         <form onSubmit={handleSubmit} className="space-y-4">
-          {/* Select Demand Type */}
           <div>
-            <label className="block text-sm font-medium text-gray-700">
-              Demand Type
-            </label>
-            <select
-              name="demandType"
-              value={formData.demandType}
-              onChange={handleChange}
-              className="w-full mt-1 px-3 py-2 border rounded-md focus:ring-2 focus:ring-black outline-none"
-            >
+            <label className="block text-sm font-medium text-gray-700">Demand Type</label>
+            <select name="demandType" value={formData.demandType} onChange={handleChange} className="w-full mt-1 px-3 py-2 border rounded-md focus:ring-2 focus:ring-black outline-none">
               {demandTypes.map((demandType) => (
                 <option value={demandType.type} key={demandType.type}>
                   {demandType.type}
@@ -67,28 +55,11 @@ const AddRate = () => {
               ))}
             </select>
           </div>
-
-          {/* Input Rate per Unit */}
           <div>
-            <label className="block text-sm font-medium text-gray-700">
-              Rate per Unit
-            </label>
-            <input
-              type="number"
-              name="ratePerUnit"
-              value={formData.ratePerUnit}
-              onChange={handleChange}
-              required
-              className="w-full mt-1 px-3 py-2 border rounded-md focus:ring-2 focus:ring-black outline-none"
-              placeholder="Enter Rate per Unit"
-            />
+            <label className="block text-sm font-medium text-gray-700">Rate per Unit</label>
+            <input type="number" name="ratePerUnit" value={formData.ratePerUnit} onChange={handleChange} required className="w-full mt-1 px-3 py-2 border rounded-md focus:ring-2 focus:ring-black outline-none" placeholder="Enter Rate per Unit" />
           </div>
-
-          {/* Submit Button */}
-          <button
-            type="submit"
-            className="w-full bg-black text-white py-2 rounded-md hover:bg-gray-900 transition duration-300"
-          >
+          <button type="submit" className="w-full bg-black text-white py-2 rounded-md hover:bg-gray-900 transition duration-300">
             Set Rate
           </button>
         </form>
